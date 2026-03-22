@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw — My AI Ghost in the Machine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <style>
+        :root {
+            --r-heading-color: #58a6ff;
+            --r-link-color: #58a6ff;
+        }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; }
+        .reveal .slide-number { font-size: 0.6em; }
+        .emoji-big { font-size: 2em; }
+        .highlight-box {
+            background: rgba(88, 166, 255, 0.15);
+            border: 1px solid #58a6ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            text-align: left;
+        }
+        .reveal ul { text-align: left; }
+        .reveal li { margin-bottom: 0.4em; }
+        .green { color: #3fb950; }
+        .orange { color: #d29922; }
+        .red { color: #f85149; }
+        .blue { color: #58a6ff; }
+        .dim { color: #8b949e; }
+        .small { font-size: 0.7em; }
+        .architecture-box {
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            text-align: left;
+        }
+        code {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .reveal pre code {
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- TITLE -->
+<section>
+    <h1>🤖 OpenClaw</h1>
+    <h3>Building a Personal AI Assistant<br>That Actually <em>Does</em> Things</h3>
+    <p class="dim" style="margin-top: 40px;">Rob Hofman — Computer Club Meetup</p>
+    <p class="small dim">March 2026</p>
+</section>
+
+<!-- ABOUT ME -->
+<section>
+    <h2>👋 Who Am I?</h2>
+    <div class="highlight-box">
+        <p><strong>Rob Hofman</strong> — Microsoft Integration Architect at <span class="blue">delaware</span></p>
+        <p>Azure • API Management • Event-Driven Architecture</p>
+    </div>
+    <p style="margin-top: 30px;">I wanted an AI assistant that goes beyond ChatGPT.</p>
+    <p>Not just <em>answers</em> — but <strong>actions</strong>.</p>
+</section>
+
+<!-- WHAT IS OPENCLAW -->
+<section>
+    <section>
+        <h2>What is OpenClaw?</h2>
+        <p class="emoji-big">🦀</p>
+        <p>An open-source framework to run a <strong>persistent AI agent</strong><br>on your own machine.</p>
+        <br>
+        <ul>
+            <li>Runs 24/7 on a Linux box</li>
+            <li>Connects to your messaging apps</li>
+            <li>Has access to your tools, files & APIs</li>
+            <li>Remembers context across sessions</li>
+        </ul>
+        <p class="small dim" style="margin-top: 20px;">github.com/openclaw/openclaw • docs.openclaw.ai</p>
+    </section>
+    <section>
+        <h2>Think of it as...</h2>
+        <div class="highlight-box">
+            <p>🧠 <strong>ChatGPT</strong> — but running on your machine</p>
+            <p>📱 Connected to <strong>Telegram, WhatsApp, Discord</strong></p>
+            <p>🔧 With access to your <strong>filesystem, APIs, databases</strong></p>
+            <p>⏰ That can <strong>wake up on its own</strong> and do things</p>
+        </div>
+    </section>
+</section>
+
+<!-- MY SETUP -->
+<section>
+    <section>
+        <h2>🏗️ My Setup</h2>
+        <div class="two-col">
+            <div class="architecture-box">
+                <h3 class="blue">Infrastructure</h3>
+                <ul class="small">
+                    <li>Ubuntu Linux machine</li>
+                    <li>Tailscale VPN for remote access</li>
+                    <li>OpenClaw gateway daemon (24/7)</li>
+                    <li>Multiple LLM providers</li>
+                </ul>
+            </div>
+            <div class="architecture-box">
+                <h3 class="blue">Channels</h3>
+                <ul class="small">
+                    <li>📱 Telegram (primary)</li>
+                    <li>💬 WhatsApp</li>
+                    <li>🌐 Web UI via Tailscale</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h2>🧠 The Brain</h2>
+        <div class="architecture-box">
+            <p><strong>LLM Models Used:</strong></p>
+            <ul class="small">
+                <li><span class="green">GitHub Copilot</span></li>
+                <li><span class="green">synthetic.new</span> — Kimi K2.5, GLM-4.7, MiniMax M2.1</li>
+                <li><span class="green">Claude Max</span></li>
+            </ul>
+            <p class="dim small" style="margin-top: 10px;">Smart routing = expensive models only when needed</p>
+        </div>
+    </section>
+    <section>
+        <h2>🗂️ File-Based Memory</h2>
+        <pre><code class="language-bash">workspace/
+├── SOUL.md          # Personality & behavior rules
+├── USER.md          # Who Rob is, what he needs
+├── MEMORY.md        # Long-term curated memory
+├── HEARTBEAT.md     # Scheduled checks config
+├── TOOLS.md         # API keys, service notes
+├── memory/
+│   ├── 2026-02-09.md
+│   ├── 2026-02-22.md   # Smartlink deployment day!
+│   └── ...
+├── worklog/
+│   └── 2026-W11.json   # Time tracking
+└── skills/
+    ├── smartlink-deploy/
+    └── agentmail/</code></pre>
+    </section>
+</section>
+
+<!-- SOUL.MD -->
+<section>
+    <h2>💀 SOUL.md — Giving It Personality</h2>
+    <pre><code class="language-markdown"># SOUL.md - Who You Are
+
+Be genuinely helpful, not performatively helpful.
+Skip the "Great question!" — just help.
+
+Have opinions. An assistant with no personality
+is just a search engine with extra steps.
+
+Be resourceful before asking. Try to figure it
+out. Read the file. Search for it. THEN ask.
+
+Remember you're a guest. You have access to
+someone's life. Treat it with respect.</code></pre>
+    <p class="small dim">The AI reads this every session. It shapes behavior.</p>
+</section>
+
+<!-- HEARTBEATS -->
+<section>
+    <section>
+        <h2>💓 Heartbeats & Cron Jobs</h2>
+        <p>The agent doesn't just wait for messages.<br>It <strong>wakes up on its own</strong>.</p>
+        <div class="highlight-box">
+            <ul>
+                <li>⏰ <strong>Cron jobs</strong> — precise schedules (daily quote, check-ins)</li>
+                <li>💓 <strong>Heartbeats</strong> — periodic checks every 2 hours</li>
+            </ul>
+        </div>
+    </section>
+    <section>
+        <h2>⏰ My Cron Schedule</h2>
+        <table style="font-size: 0.7em;">
+            <tr><td>🌅 8:30 AM</td><td>Daily motivation quote</td></tr>
+            <tr><td>📋 10:00 AM</td><td>Morning check-in: "What are you working on?"</td></tr>
+            <tr><td>📋 1:00 PM</td><td>Afternoon check-in</td></tr>
+            <tr><td>⚠️ 4:15 PM</td><td>Client reminder</td></tr>
+            <tr><td>📋 5:00 PM</td><td>Wrap-up: log today's work</td></tr>
+            <tr><td>📊 Fri 4:00 PM</td><td>Weekly summary</td></tr>
+        </table>
+        <p class="small dim">All Mon-Fri, Europe/Brussels timezone</p>
+    </section>
+    <section>
+        <h2>💓 Heartbeat Checks</h2>
+        <p>Every 2 hours during work hours:</p>
+        <ul>
+            <li>📧 Check AgentMail inbox</li>
+            <li>✅ Scan for overdue tasks</li>
+            <li>📓 Detect new Obsidian notes</li>
+            <li>🔔 Fire scheduled reminders</li>
+            <li>📊 Check project progress</li>
+        </ul>
+        <p class="dim small">Only messages me if something actually needs attention</p>
+    </section>
+</section>
+
+<!-- PROJECTS TOGETHER -->
+<section>
+    <section>
+        <h2>🚀 What We Built Together</h2>
+        <p class="dim">Real projects, not toy demos</p>
+    </section>
+    <section>
+        <h2>☁️ Smartlink — Azure Deployment</h2>
+        <div class="highlight-box">
+            <p><strong>Challenge:</strong> Deploy 7 Azure infrastructure components<br>via Azure DevOps pipelines</p>
+        </div>
+        <ul class="small">
+            <li><span class="green">✅</span> 40+ Azure resources deployed automatically</li>
+            <li><span class="green">✅</span> Container Apps, Logic Apps, Service Bus, APIM</li>
+            <li><span class="green">✅</span> Debugged pipeline auth issues in real-time</li>
+            <li><span class="green">✅</span> Created deployment guide in Obsidian</li>
+            <li><span class="green">✅</span> Built a reusable <strong>AgentSkill</strong> for future deploys</li>
+        </ul>
+        <p class="dim small">All 7 pipelines: green checkmarks ✅</p>
+    </section>
+    <section>
+        <h2>📚 Syntra Teaching Materials</h2>
+        <div class="highlight-box">
+            <p><strong>Challenge:</strong> Enhance Python course materials<br>for Syntra (overnight task)</p>
+        </div>
+        <ul class="small">
+            <li>🐍 19 exercises added: NumPy, Pandas, SQL, Matplotlib</li>
+            <li>📖 Broadcasting & vectorization theory</li>
+            <li>⏰ Worked overnight autonomously</li>
+            <li>📤 Committed & pushed to GitHub</li>
+        </ul>
+        <p class="dim small">Assigned at 9 PM → done by morning</p>
+    </section>
+    <section>
+        <h2>🍽️ Food Planner App</h2>
+        <div class="highlight-box">
+            <p><strong>Challenge:</strong> Build a web app for meal planning<br>with Dutch translation support</p>
+        </div>
+        <ul class="small">
+            <li>🌐 Full web app with substitution tables</li>
+            <li>🇳🇱 Dutch/English language toggle (156 items translated)</li>
+            <li>🛒 Shopping list generator</li>
+            <li>📱 Accessible via Tailscale network</li>
+        </ul>
+    </section>
+    <section>
+        <h2>📊 Automated Work Tracking</h2>
+        <div class="highlight-box">
+            <p><strong>Challenge:</strong> Track time across 5+ client projects<br>without manual timesheets</p>
+        </div>
+        <ul class="small">
+            <li>💬 "What did you work on?" → logged automatically</li>
+            <li>📁 JSON worklogs + Obsidian notes generated</li>
+            <li>📊 Weekly summaries every Friday</li>
+            <li>🏢 Tracks work across multiple client projects</li>
+        </ul>
+    </section>
+</section>
+
+<!-- COOL CAPABILITIES -->
+<section>
+    <section>
+        <h2>🔥 Cool Things It Can Do</h2>
+    </section>
+    <section>
+        <h2>🤖 Spawn Sub-Agents</h2>
+        <pre><code class="language-text">Me:     "Build me a REST API for the food planner"
+Jarvis: *spawns Claude Code sub-agent*
+        *sub-agent writes code, tests, commits*
+        *reports back when done*</code></pre>
+        <div class="highlight-box small">
+            <p>Can run <strong>Codex, Claude Code, or custom agents</strong> in parallel.<br>
+            Each gets its own sandbox. Main agent orchestrates.</p>
+        </div>
+    </section>
+    <section>
+        <h2>🌐 Browser Automation</h2>
+        <pre><code class="language-text">Me:     "Check the Azure DevOps pipeline status"
+Jarvis: *opens browser*
+        *navigates to Azure DevOps*
+        *takes snapshot, reads DOM*
+        "Pipeline #29 completed ✅ — 5 APIs deployed"</code></pre>
+        <p class="small dim">Full Playwright-powered browser control</p>
+    </section>
+    <section>
+        <h2>📧 Email Agent</h2>
+        <div class="highlight-box">
+            <p><strong>AgentMail</strong> — dedicated AI email address</p>
+            
+        </div>
+        <ul class="small">
+            <li>Receives and processes emails autonomously</li>
+            <li>Can send emails on my behalf (with permission)</li>
+            <li>Filters signal from noise</li>
+        </ul>
+    </section>
+    <section>
+        <h2>🎨 Image Generation</h2>
+        <p>Integrated Gemini 3 Pro for image generation</p>
+        <div class="highlight-box small">
+            <p>"Generate a logo for the food planner app"<br>
+            → Creates image → Sends via Telegram</p>
+        </div>
+    </section>
+    <section>
+        <h2>🔧 Custom Skills</h2>
+        <pre><code class="language-markdown"># skills/smartlink-deploy/SKILL.md
+
+Specialized deployment knowledge:
+- Pipeline configurations
+- RBAC role assignments  
+- Troubleshooting playbooks
+- Architecture reference docs</code></pre>
+        <p class="small">Package domain knowledge as reusable skills.<br>
+        Share them on <span class="blue">clawhub.com</span>.</p>
+    </section>
+</section>
+
+<!-- ARCHITECTURE DIAGRAM -->
+<section>
+    <h2>🏛️ How It All Fits Together</h2>
+    <pre style="font-size: 0.5em; text-align: center;"><code class="language-text">
+    ┌─────────────┐     ┌─────────────┐
+    │  Telegram 📱 │     │ WhatsApp 💬 │
+    └──────┬──────┘     └──────┬──────┘
+           │                    │
+           ▼                    ▼
+    ┌──────────────────────────────────┐
+    │      OpenClaw Gateway 🦀         │
+    │   (Node.js daemon, 24/7)         │
+    ├──────────────────────────────────┤
+    │  Cron │ Heartbeat │ Sub-agents   │
+    ├──────────────────────────────────┤
+    │         LLM Router               │
+    │  ┌───────┬────────┬───────────┐  │
+    │  │Copilot│ Kimi   │ MiniMax   │  │
+    │  │Claude │ GLM-4.7│ Gemini    │  │
+    │  └───────┴────────┴───────────┘  │
+    ├──────────────────────────────────┤
+    │  Tools: filesystem, browser,     │
+    │  APIs, email, git, exec, TTS     │
+    └──────────────────────────────────┘
+           │         │         │
+    ┌──────┴──┐ ┌────┴────┐ ┌──┴──────┐
+    │Obsidian │ │Worklog  │ │ Azure   │
+    │  Notes  │ │Tracking │ │ DevOps  │
+    └─────────┘ └─────────┘ └─────────┘
+    </code></pre>
+</section>
+
+<!-- LESSONS LEARNED -->
+<section>
+    <section>
+        <h2>💡 Lessons Learned</h2>
+    </section>
+    <section>
+        <h2>What Works Well</h2>
+        <ul>
+            <li class="green">File-based memory is surprisingly effective</li>
+            <li class="green">Proactive scheduling (heartbeats + cron) is a game-changer</li>
+            <li class="green">Sub-agent spawning for heavy tasks</li>
+            <li class="green">Free models (Kimi, GLM) handle 90% of tasks</li>
+            <li class="green">Multi-channel: message from anywhere</li>
+        </ul>
+    </section>
+    <section>
+        <h2>What's Tricky</h2>
+        <ul>
+            <li class="orange">Context window limits — compaction loses nuance</li>
+            <li class="orange">No persistent memory without explicit file writes</li>
+            <li class="orange">Image handling quirks (Telegram optimization bugs)</li>
+            <li class="orange">WhatsApp gateway disconnections</li>
+            <li class="orange">Time tracking needs human confirmation (hours)</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Key Insight</h2>
+        <div class="highlight-box">
+            <p style="font-size: 1.3em;">The <strong>SOUL.md</strong> pattern matters more<br>than the model you use.</p>
+            <p class="dim" style="margin-top: 15px;">Personality, boundaries, and behavior rules<br>
+            turn a generic LLM into <em>your</em> assistant.</p>
+        </div>
+    </section>
+</section>
+
+<!-- DEMO IDEAS -->
+<section>
+    <h2>🎬 Live Demo Ideas</h2>
+    <div class="two-col">
+        <div class="architecture-box">
+            <h3>💬 Chat Demo</h3>
+            <ul class="small">
+                <li>Send a Telegram message</li>
+                <li>Watch it respond in real-time</li>
+                <li>Ask it about my schedule</li>
+            </ul>
+        </div>
+        <div class="architecture-box">
+            <h3>🔧 Task Demo</h3>
+            <ul class="small">
+                <li>"Create a reminder for next Tuesday"</li>
+                <li>"What did I work on this week?"</li>
+                <li>"Spawn a coding agent to build X"</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- GETTING STARTED -->
+<section>
+    <h2>🚀 Want to Try It?</h2>
+    <pre><code class="language-bash">npm install -g openclaw
+openclaw init
+openclaw gateway start</code></pre>
+    <div class="highlight-box small">
+        <p>📖 <strong>Docs:</strong> docs.openclaw.ai</p>
+        <p>💻 <strong>Source:</strong> github.com/openclaw/openclaw</p>
+        <p>🧩 <strong>Skills:</strong> clawhub.com</p>
+        <p>💬 <strong>Community:</strong> discord.com/invite/clawd</p>
+    </div>
+</section>
+
+<!-- END -->
+<section>
+    <h1>Questions? 🤔</h1>
+    <p class="dim" style="margin-top: 40px;">or just message my Telegram bot<br>and watch it answer live 😄</p>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide',
+        plugins: [ RevealHighlight ]
+    });
+</script>
+</body>
+</html>

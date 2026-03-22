@@ -145,16 +145,16 @@
 
         /* ── TONAL SHAPE (BG DECORATION) ── */
         .tonal-shape {
-            position: absolute;
+            position: absolute !important;
             top: 0; right: -10%;
             width: 35%;
             height: 100%;
             background: rgba(46,97,119,0.08);
             transform: skewX(-8deg);
             pointer-events: none;
-            z-index: 0;
+            z-index: 0 !important;
         }
-        .reveal .slides section > * { position: relative; z-index: 1; }
+        .reveal .slides section > *:not(.tonal-shape) { position: relative; z-index: 1; }
 
         /* ── PILL TAG ── */
         .tag {

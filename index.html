@@ -1,57 +1,311 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>OpenClaw — My AI Ghost in the Machine</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" rel="stylesheet"/>
     <style>
         :root {
-            --r-heading-color: #58a6ff;
-            --r-link-color: #58a6ff;
+            --primary: #2e6177;
+            --primary-container: #b2e4fe;
+            --on-surface: #0c0f0f;
+            --surface: #f6f6f6;
+            --surface-dim: #d2d5d5;
+            --tertiary: #4052b7;
+            --tertiary-container: #9eabff;
+            --on-surface-variant: #5a5c5c;
         }
-        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; }
-        .reveal .slide-number { font-size: 0.6em; }
-        .emoji-big { font-size: 2em; }
-        .highlight-box {
-            background: rgba(88, 166, 255, 0.15);
-            border: 1px solid #58a6ff;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 15px 0;
+
+        .reveal-viewport {
+            background: var(--on-surface);
         }
+
+        .reveal {
+            font-family: 'Inter', sans-serif;
+            font-size: 38px;
+            color: var(--surface);
+            background: var(--on-surface);
+        }
+
+        .reveal .slides section {
+            text-align: left;
+            padding: 2rem 3rem;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        /* ── TYPOGRAPHY ── */
+        .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.03em;
+            color: var(--surface);
+            text-align: left;
+            line-height: 0.95;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal h1 { font-size: 3.4em; }
+        .reveal h2 { font-size: 2.4em; }
+        .reveal h3 { font-size: 1.4em; }
+
+        .reveal p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65em;
+            color: rgba(246,246,246,0.65);
+            line-height: 1.6;
+            margin: 0.4em 0;
+        }
+
+        .reveal ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .reveal ul li {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6em;
+            color: rgba(246,246,246,0.75);
+            padding: 0.35em 0 0.35em 1.2em;
+            border-left: 3px solid transparent;
+            margin-bottom: 0.15em;
+        }
+
+        .reveal ul li::before {
+            content: "→";
+            color: var(--primary-container);
+            margin-right: 0.5em;
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+        }
+
+        /* ── ACCENT TEXT ── */
+        .accent { color: var(--primary-container); }
+        .accent-teal { color: #7ecfee; }
+        .dim { color: rgba(246,246,246,0.35); }
+
+        /* ── SLIDE LABEL ── */
+        .slide-label {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+        .slide-label .category {
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+            font-size: 0.42em;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--primary-container);
+        }
+        .slide-label .line {
+            width: 2rem;
+            height: 2px;
+            background: var(--primary-container);
+            display: inline-block;
+        }
+        .slide-label .num {
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+            font-size: 0.42em;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: rgba(246,246,246,0.4);
+        }
+
+        /* ── BRUTAL BOX ── */
+        .brutal-box {
+            background: var(--surface);
+            color: var(--on-surface);
+            border-left: 8px solid var(--primary);
+            padding: 1rem 1.4rem;
+            margin-top: 1rem;
+        }
+        .brutal-box .label {
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+            font-size: 0.38em;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--on-surface-variant);
+            margin-bottom: 0.3em;
+        }
+        .brutal-box .value {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.48em;
+            color: var(--on-surface);
+        }
+
+        /* ── TONAL SHAPE (BG DECORATION) ── */
+        .tonal-shape {
+            position: absolute;
+            top: 0; right: -10%;
+            width: 35%;
+            height: 100%;
+            background: rgba(46,97,119,0.08);
+            transform: skewX(-8deg);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .reveal .slides section > * { position: relative; z-index: 1; }
+
+        /* ── PILL TAG ── */
+        .tag {
+            display: inline-block;
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+            font-size: 0.32em;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.3em 0.8em;
+            background: var(--primary);
+            color: var(--primary-container);
+            margin-right: 0.4em;
+            margin-bottom: 0.4em;
+        }
+        .tag.light {
+            background: var(--primary-container);
+            color: var(--on-surface);
+        }
+        .tag.blue {
+            background: var(--tertiary);
+            color: var(--tertiary-container);
+        }
+
+        /* ── TWO-COL ── */
         .two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            text-align: left;
+            gap: 2rem;
+            margin-top: 0.8rem;
         }
-        .reveal ul { text-align: left; }
-        .reveal li { margin-bottom: 0.4em; }
-        .green { color: #3fb950; }
-        .orange { color: #d29922; }
-        .red { color: #f85149; }
-        .blue { color: #58a6ff; }
-        .dim { color: #8b949e; }
-        .small { font-size: 0.7em; }
-        .architecture-box {
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px 0;
-            text-align: left;
+
+        /* ── CODE BLOCK ── */
+        .reveal pre {
+            font-size: 0.38em;
+            background: rgba(255,255,255,0.04);
+            border-left: 4px solid var(--primary-container);
+            padding: 1rem 1.2rem;
+            border-radius: 0;
+            box-shadow: none;
+            margin: 0.6rem 0;
+            width: 100%;
         }
-        code {
-            background: rgba(255,255,255,0.1);
-            padding: 2px 8px;
-            border-radius: 4px;
+
+        /* ── BIG NUMBER ── */
+        .big-num {
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+            font-size: 4em;
+            color: var(--primary-container);
+            line-height: 1;
+            letter-spacing: -0.04em;
         }
-        .reveal pre code {
-            font-size: 0.85em;
-            line-height: 1.4;
+
+        /* ── TITLE SLIDE ── */
+        .title-slide h1 {
+            font-size: 4em;
+            line-height: 0.9;
+        }
+        .title-slide .subtitle {
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 700;
+            font-size: 0.55em;
+            color: rgba(246,246,246,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 1.2em;
+        }
+        .title-slide .author {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.48em;
+            color: rgba(246,246,246,0.6);
+            margin-top: 2.5em;
+            border-top: 1px solid rgba(246,246,246,0.1);
+            padding-top: 0.8em;
+        }
+
+        /* ── PROGRESS BAR ── */
+        .reveal .progress { color: var(--primary-container); }
+        .reveal .progress span { background: var(--primary-container); }
+
+        /* ── SLIDE NUMBER ── */
+        .reveal .slide-number {
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+            font-size: 0.4em;
+            color: rgba(246,246,246,0.25);
+            background: transparent;
+        }
+
+        /* ── DIVIDER ── */
+        .hdivider {
+            width: 3rem;
+            height: 3px;
+            background: var(--primary-container);
+            margin: 0.8rem 0;
+        }
+
+        /* ── SECTION BREAK SLIDE ── */
+        .section-break {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+        .section-break .big-word {
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+            font-size: 5.5em;
+            text-transform: uppercase;
+            letter-spacing: -0.04em;
+            color: var(--surface);
+            line-height: 0.9;
+        }
+        .section-break .big-word span {
+            color: var(--primary-container);
+        }
+
+        /* ── QUOTE MARK ── */
+        .decorative-quote {
+            position: absolute;
+            top: -0.2em;
+            left: -0.1em;
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+            font-size: 8em;
+            color: rgba(178,228,254,0.06);
+            line-height: 1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── FOOTER BAR (on each slide) ── */
+        .slide-footer {
+            position: absolute;
+            bottom: 1.2rem;
+            left: 3rem;
+            right: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(246,246,246,0.08);
+            padding-top: 0.5rem;
+        }
+        .slide-footer span {
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+            font-size: 0.3em;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(246,246,246,0.2);
         }
     </style>
 </head>
@@ -59,391 +313,429 @@
 <div class="reveal">
 <div class="slides">
 
-<!-- TITLE -->
-<section>
-    <h1>🤖 OpenClaw</h1>
-    <h3>Building a Personal AI Assistant<br>That Actually <em>Does</em> Things</h3>
-    <p class="dim" style="margin-top: 40px;">Rob Hofman — Computer Club Meetup</p>
-    <p class="small dim">March 2026</p>
-</section>
-
-<!-- ABOUT ME -->
-<section>
-    <h2>👋 Who Am I?</h2>
-    <div class="highlight-box">
-        <p><strong>Rob Hofman</strong> — Microsoft Integration Architect at <span class="blue">delaware</span></p>
-        <p>Azure • API Management • Event-Driven Architecture</p>
-    </div>
-    <p style="margin-top: 30px;">I wanted an AI assistant that goes beyond ChatGPT.</p>
-    <p>Not just <em>answers</em> — but <strong>actions</strong>.</p>
-</section>
-
-<!-- WHAT IS OPENCLAW -->
-<section>
+    <!-- ── SLIDE 1: TITLE ── -->
     <section>
-        <h2>What is OpenClaw?</h2>
-        <p class="emoji-big">🦀</p>
-        <p>An open-source framework to run a <strong>persistent AI agent</strong><br>on your own machine.</p>
-        <br>
-        <ul>
-            <li>Runs 24/7 on a Linux box</li>
-            <li>Connects to your messaging apps</li>
-            <li>Has access to your tools, files & APIs</li>
-            <li>Remembers context across sessions</li>
-        </ul>
-        <p class="small dim" style="margin-top: 20px;">github.com/openclaw/openclaw • docs.openclaw.ai</p>
-    </section>
-    <section>
-        <h2>Think of it as...</h2>
-        <div class="highlight-box">
-            <p>🧠 <strong>ChatGPT</strong> — but running on your machine</p>
-            <p>📱 Connected to <strong>Telegram, WhatsApp, Discord</strong></p>
-            <p>🔧 With access to your <strong>filesystem, APIs, databases</strong></p>
-            <p>⏰ That can <strong>wake up on its own</strong> and do things</p>
+        <div class="tonal-shape"></div>
+        <div class="title-slide" style="margin-top: 3rem;">
+            <div class="slide-label">
+                <span class="category">Computer Club</span>
+                <span class="line"></span>
+                <span class="num">2026</span>
+            </div>
+            <h1>My AI Ghost<br/><span class="accent">in the<br/>Machine</span></h1>
+            <p class="subtitle">How I built a personal AI assistant<br/>that actually knows me</p>
+            <p class="author">Rob Hofman · Microsoft Integration Architect</p>
+        </div>
+        <div class="slide-footer">
+            <span>OpenClaw</span>
+            <span>Computer Club 2026</span>
         </div>
     </section>
-</section>
 
-<!-- MY SETUP -->
-<section>
+    <!-- ── SLIDE 2: THE PROBLEM ── -->
     <section>
-        <h2>🏗️ My Setup</h2>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Context</span>
+            <span class="line"></span>
+            <span class="num">01</span>
+        </div>
+        <h2>ChatGPT<br/><span class="accent">Forgets</span><br/>Everything</h2>
+        <div class="hdivider"></div>
+        <p>Every session starts from zero. No memory of your projects,<br/>your style, your preferences. Just a blank slate.</p>
+        <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <span class="tag">No memory</span>
+            <span class="tag">No context</span>
+            <span class="tag">No proactivity</span>
+            <span class="tag">No personality</span>
+        </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
+    </section>
+
+    <!-- ── SLIDE 3: WHAT IS OPENCLAW ── -->
+    <section>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Platform</span>
+            <span class="line"></span>
+            <span class="num">02</span>
+        </div>
+        <h2>What is<br/><span class="accent">OpenClaw?</span></h2>
+        <div class="hdivider"></div>
         <div class="two-col">
-            <div class="architecture-box">
-                <h3 class="blue">Infrastructure</h3>
-                <ul class="small">
-                    <li>Ubuntu Linux machine</li>
-                    <li>Tailscale VPN for remote access</li>
-                    <li>OpenClaw gateway daemon (24/7)</li>
-                    <li>Multiple LLM providers</li>
-                </ul>
-            </div>
-            <div class="architecture-box">
-                <h3 class="blue">Channels</h3>
-                <ul class="small">
-                    <li>📱 Telegram (primary)</li>
-                    <li>💬 WhatsApp</li>
-                    <li>🌐 Web UI via Tailscale</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <section>
-        <h2>🧠 The Brain</h2>
-        <div class="architecture-box">
-            <p><strong>LLM Models Used:</strong></p>
-            <ul class="small">
-                <li><span class="green">GitHub Copilot</span></li>
-                <li><span class="green">synthetic.new</span> — Kimi K2.5, GLM-4.7, MiniMax M2.1</li>
-                <li><span class="green">Claude Max</span></li>
+            <ul>
+                <li>Personal AI agent platform — self-hosted</li>
+                <li>Connects to Telegram, WhatsApp, Signal, Discord</li>
+                <li>Routes to multiple LLM providers</li>
+                <li>Runs tools: browser, shell, files, APIs</li>
+                <li>Extensible with custom skills</li>
             </ul>
-            <p class="dim small" style="margin-top: 10px;">Smart routing = expensive models only when needed</p>
+            <div>
+                <div class="brutal-box">
+                    <p class="label">In one sentence</p>
+                    <p class="value">Your own AI assistant — running on your own machine, knowing who you are.</p>
+                </div>
+            </div>
         </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
     </section>
+
+    <!-- ── SLIDE 4: MY SETUP ── -->
     <section>
-        <h2>🗂️ File-Based Memory</h2>
-        <pre><code class="language-bash">workspace/
-├── SOUL.md          # Personality & behavior rules
-├── USER.md          # Who Rob is, what he needs
-├── MEMORY.md        # Long-term curated memory
-├── HEARTBEAT.md     # Scheduled checks config
-├── TOOLS.md         # API keys, service notes
-├── memory/
-│   ├── 2026-02-09.md
-│   ├── 2026-02-22.md   # Smartlink deployment day!
-│   └── ...
-├── worklog/
-│   └── 2026-W11.json   # Time tracking
-└── skills/
-    ├── smartlink-deploy/
-    └── agentmail/</code></pre>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Setup</span>
+            <span class="line"></span>
+            <span class="num">03</span>
+        </div>
+        <h2>My<br/><span class="accent">Setup</span></h2>
+        <div class="hdivider"></div>
+        <div class="two-col">
+            <ul>
+                <li>Ubuntu server on Tailscale</li>
+                <li>Telegram as primary channel</li>
+                <li>GitHub Copilot · synthetic.new · Claude Max</li>
+                <li>File-based memory system</li>
+                <li>Custom workspace with personality files</li>
+            </ul>
+            <pre>~/.openclaw/workspace/
+├── SOUL.md        ← who I am
+├── USER.md        ← who Rob is
+├── MEMORY.md      ← long-term memory
+├── HEARTBEAT.md   ← proactive checks
+└── memory/
+    └── 2026-03-22.md</pre>
+        </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
     </section>
-</section>
 
-<!-- SOUL.MD -->
-<section>
-    <h2>💀 SOUL.md — Giving It Personality</h2>
-    <pre><code class="language-markdown"># SOUL.md - Who You Are
+    <!-- ── SLIDE 5: THE BRAIN ── -->
+    <section>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Intelligence</span>
+            <span class="line"></span>
+            <span class="num">04</span>
+        </div>
+        <h2>The<br/><span class="accent">Brain</span></h2>
+        <div class="hdivider"></div>
+        <p>Three model families — each with a different role.</p>
+        <div style="margin-top: 1.2rem; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+            <div class="brutal-box">
+                <p class="label">Tier 1</p>
+                <p class="value">GitHub Copilot</p>
+            </div>
+            <div class="brutal-box" style="border-color: var(--tertiary);">
+                <p class="label">Tier 2</p>
+                <p class="value">synthetic.new</p>
+                <p style="font-size: 0.32em; margin-top: 0.3em; color: var(--on-surface-variant);">Kimi K2.5 · GLM-4.7 · MiniMax M2.1</p>
+            </div>
+            <div class="brutal-box" style="border-color: #9eabff;">
+                <p class="label">Tier 3</p>
+                <p class="value">Claude Max</p>
+            </div>
+        </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
+    </section>
 
+    <!-- ── SLIDE 6: SOUL.MD ── -->
+    <section>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Identity</span>
+            <span class="line"></span>
+            <span class="num">05</span>
+        </div>
+        <h2>Giving it<br/><span class="accent">a Soul</span></h2>
+        <div class="hdivider"></div>
+        <pre># SOUL.md
 Be genuinely helpful, not performatively helpful.
 Skip the "Great question!" — just help.
 
-Have opinions. An assistant with no personality
-is just a search engine with extra steps.
+Have opinions. You're allowed to disagree.
 
-Be resourceful before asking. Try to figure it
-out. Read the file. Search for it. THEN ask.
+Be resourceful before asking. Read the file.
+Check the context. Search for it. Then ask.
 
-Remember you're a guest. You have access to
-someone's life. Treat it with respect.</code></pre>
-    <p class="small dim">The AI reads this every session. It shapes behavior.</p>
-</section>
+Each session, you wake up fresh.
+These files ARE your memory.</pre>
+        <p style="margin-top: 0.8rem;">A markdown file that shapes personality, tone, and behaviour.</p>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
+    </section>
 
-<!-- HEARTBEATS -->
-<section>
+    <!-- ── SLIDE 7: MEMORY ── -->
     <section>
-        <h2>💓 Heartbeats & Cron Jobs</h2>
-        <p>The agent doesn't just wait for messages.<br>It <strong>wakes up on its own</strong>.</p>
-        <div class="highlight-box">
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Continuity</span>
+            <span class="line"></span>
+            <span class="num">06</span>
+        </div>
+        <h2>Memory<br/><span class="accent">that Persists</span></h2>
+        <div class="hdivider"></div>
+        <div class="two-col">
             <ul>
-                <li>⏰ <strong>Cron jobs</strong> — precise schedules (daily quote, check-ins)</li>
-                <li>💓 <strong>Heartbeats</strong> — periodic checks every 2 hours</li>
+                <li><strong style="color: var(--primary-container);">MEMORY.md</strong> — curated long-term memory</li>
+                <li><strong style="color: var(--primary-container);">memory/YYYY-MM-DD.md</strong> — daily notes</li>
+                <li>Agent reads them every session before responding</li>
+                <li>Agent writes to them after important events</li>
+                <li>No database. Just files.</li>
+            </ul>
+            <div class="brutal-box">
+                <p class="label">Key insight</p>
+                <p class="value">"Mental notes don't survive session restarts. Files do."</p>
+            </div>
+        </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
+    </section>
+
+    <!-- ── SLIDE 8: HEARTBEATS ── -->
+    <section>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Proactivity</span>
+            <span class="line"></span>
+            <span class="num">07</span>
+        </div>
+        <h2>Heart<span class="accent">beats</span><br/>& Cron</h2>
+        <div class="hdivider"></div>
+        <div class="two-col">
+            <ul>
+                <li>Heartbeat polls every 2 hours</li>
+                <li>Checks tasks, emails, Obsidian notes</li>
+                <li>Messages Rob if something needs attention</li>
+                <li>Cron jobs for precise scheduling</li>
+            </ul>
+            <pre>08:30  Daily motivation
+10:00  Morning check-in
+13:00  Afternoon check-in
+17:00  Wrap-up
+16:00  Weekly summary</pre>
+        </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
+    </section>
+
+    <!-- ── SLIDE 9: PROJECTS SECTION BREAK ── -->
+    <section>
+        <div class="section-break">
+            <div class="slide-label">
+                <span class="category">Real world</span>
+                <span class="line"></span>
+                <span class="num">08</span>
+            </div>
+            <div class="big-word">What we<br/><span>built</span><br/>together</div>
+        </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
+    </section>
+
+    <!-- ── SLIDE 10: PROJECT 1 ── -->
+    <section>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Project</span>
+            <span class="line"></span>
+            <span class="num">09</span>
+        </div>
+        <h2>Cloud<br/><span class="accent">Infrastructure</span></h2>
+        <div class="hdivider"></div>
+        <p>Designed and deployed a full Azure microservices platform — end to end.</p>
+        <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <span class="tag light">40+ Azure resources</span>
+            <span class="tag light">7 DevOps pipelines</span>
+            <span class="tag light">APIM · Service Bus · Logic Apps</span>
+        </div>
+        <div class="brutal-box" style="margin-top: 1.2rem;">
+            <p class="label">How the agent helped</p>
+            <p class="value">Ran pipelines, validated deployments, managed RBAC roles, tracked progress across sessions.</p>
+        </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
+    </section>
+
+    <!-- ── SLIDE 11: PROJECT 2 ── -->
+    <section>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Project</span>
+            <span class="line"></span>
+            <span class="num">10</span>
+        </div>
+        <h2>Teaching<br/><span class="accent">Materials</span></h2>
+        <div class="hdivider"></div>
+        <p>Generated a full course curriculum overnight — ready for class in the morning.</p>
+        <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <span class="tag light">19 exercises</span>
+            <span class="tag light">Progressive difficulty</span>
+            <span class="tag light">Syntra curriculum</span>
+        </div>
+        <div class="brutal-box" style="margin-top: 1.2rem;">
+            <p class="label">Time saved</p>
+            <p class="value">What would have taken a weekend took one session while I slept.</p>
+        </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
+    </section>
+
+    <!-- ── SLIDE 12: PROJECT 3 ── -->
+    <section>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Project</span>
+            <span class="line"></span>
+            <span class="num">11</span>
+        </div>
+        <h2>Work<br/><span class="accent">Tracking</span></h2>
+        <div class="hdivider"></div>
+        <p>Automatic time tracking across all client projects — no manual entry.</p>
+        <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <span class="tag light">Multiple clients</span>
+            <span class="tag light">Weekly summaries</span>
+            <span class="tag light">Obsidian sync</span>
+        </div>
+        <div class="brutal-box" style="margin-top: 1.2rem;">
+            <p class="label">How it works</p>
+            <p class="value">I mention what I worked on in conversation. The agent logs it, categorises it, and writes the weekly report.</p>
+        </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
+    </section>
+
+    <!-- ── SLIDE 13: CAPABILITIES ── -->
+    <section>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Capabilities</span>
+            <span class="line"></span>
+            <span class="num">12</span>
+        </div>
+        <h2>What it<br/><span class="accent">Can Do</span></h2>
+        <div class="hdivider"></div>
+        <div class="two-col">
+            <ul>
+                <li>Browser automation</li>
+                <li>Shell & file operations</li>
+                <li>Spawn sub-agents in parallel</li>
+                <li>Send & receive emails</li>
+                <li>Image generation</li>
+            </ul>
+            <ul>
+                <li>Manage tasks (Vikunja)</li>
+                <li>Read & write Obsidian notes</li>
+                <li>Custom skills (AgentSkills)</li>
+                <li>Multi-channel messaging</li>
+                <li>Text-to-speech replies</li>
             </ul>
         </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
     </section>
+
+    <!-- ── SLIDE 14: SUB-AGENTS ── -->
     <section>
-        <h2>⏰ My Cron Schedule</h2>
-        <table style="font-size: 0.7em;">
-            <tr><td>🌅 8:30 AM</td><td>Daily motivation quote</td></tr>
-            <tr><td>📋 10:00 AM</td><td>Morning check-in: "What are you working on?"</td></tr>
-            <tr><td>📋 1:00 PM</td><td>Afternoon check-in</td></tr>
-            <tr><td>⚠️ 4:15 PM</td><td>Client reminder</td></tr>
-            <tr><td>📋 5:00 PM</td><td>Wrap-up: log today's work</td></tr>
-            <tr><td>📊 Fri 4:00 PM</td><td>Weekly summary</td></tr>
-        </table>
-        <p class="small dim">All Mon-Fri, Europe/Brussels timezone</p>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Architecture</span>
+            <span class="line"></span>
+            <span class="num">13</span>
+        </div>
+        <h2>Sub<span class="accent">agents</span></h2>
+        <div class="hdivider"></div>
+        <p>For complex tasks, spawn multiple agents working in parallel.</p>
+        <pre>Rob: "What should I focus on this week?"
+
+Jarvis spawns 3 subagents simultaneously:
+  → Agent A: reads calendar (next 7 days)
+  → Agent B: checks Vikunja tasks (overdue/due)
+  → Agent C: scans recent worklog for blockers
+
+Jarvis synthesizes → one crisp answer.</pre>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
     </section>
+
+    <!-- ── SLIDE 15: ARCHITECTURE ── -->
     <section>
-        <h2>💓 Heartbeat Checks</h2>
-        <p>Every 2 hours during work hours:</p>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Architecture</span>
+            <span class="line"></span>
+            <span class="num">14</span>
+        </div>
+        <h2>Full<br/><span class="accent">Stack</span></h2>
+        <div class="hdivider"></div>
+        <pre>  Telegram / WhatsApp / Signal
+            ↓
+      OpenClaw Gateway
+            ↓
+    ┌───────────────────┐
+    │   Agent Runtime   │
+    │  SOUL · USER · MEM│
+    │  Skills · Tools   │
+    └───────────────────┘
+            ↓
+  GitHub Copilot · synthetic.new · Claude Max
+            ↓
+   Files · APIs · Browser · Shell</pre>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
+    </section>
+
+    <!-- ── SLIDE 16: LESSONS ── -->
+    <section>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Lessons</span>
+            <span class="line"></span>
+            <span class="num">15</span>
+        </div>
+        <h2>What<br/><span class="accent">I Learned</span></h2>
+        <div class="hdivider"></div>
         <ul>
-            <li>📧 Check AgentMail inbox</li>
-            <li>✅ Scan for overdue tasks</li>
-            <li>📓 Detect new Obsidian notes</li>
-            <li>🔔 Fire scheduled reminders</li>
-            <li>📊 Check project progress</li>
+            <li>Free models handle 90% of tasks surprisingly well</li>
+            <li>Personality files matter more than the model you use</li>
+            <li>Memory = files. Simple beats clever every time.</li>
+            <li>The hard part isn't the AI — it's knowing what to ask for</li>
+            <li>Having it reach out to you > you reaching out to it</li>
         </ul>
-        <p class="dim small">Only messages me if something actually needs attention</p>
+        <div class="brutal-box" style="margin-top: 1rem;">
+            <p class="label">Core insight</p>
+            <p class="value">SOUL.md turns a generic LLM into <em>your</em> assistant.</p>
+        </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
     </section>
-</section>
 
-<!-- PROJECTS TOGETHER -->
-<section>
+    <!-- ── SLIDE 17: GET STARTED ── -->
     <section>
-        <h2>🚀 What We Built Together</h2>
-        <p class="dim">Real projects, not toy demos</p>
-    </section>
-    <section>
-        <h2>☁️ Smartlink — Azure Deployment</h2>
-        <div class="highlight-box">
-            <p><strong>Challenge:</strong> Deploy 7 Azure infrastructure components<br>via Azure DevOps pipelines</p>
+        <div class="tonal-shape"></div>
+        <div class="slide-label">
+            <span class="category">Get started</span>
+            <span class="line"></span>
+            <span class="num">16</span>
         </div>
-        <ul class="small">
-            <li><span class="green">✅</span> 40+ Azure resources deployed automatically</li>
-            <li><span class="green">✅</span> Container Apps, Logic Apps, Service Bus, APIM</li>
-            <li><span class="green">✅</span> Debugged pipeline auth issues in real-time</li>
-            <li><span class="green">✅</span> Created deployment guide in Obsidian</li>
-            <li><span class="green">✅</span> Built a reusable <strong>AgentSkill</strong> for future deploys</li>
-        </ul>
-        <p class="dim small">All 7 pipelines: green checkmarks ✅</p>
-    </section>
-    <section>
-        <h2>📚 Syntra Teaching Materials</h2>
-        <div class="highlight-box">
-            <p><strong>Challenge:</strong> Enhance Python course materials<br>for Syntra (overnight task)</p>
-        </div>
-        <ul class="small">
-            <li>🐍 19 exercises added: NumPy, Pandas, SQL, Matplotlib</li>
-            <li>📖 Broadcasting & vectorization theory</li>
-            <li>⏰ Worked overnight autonomously</li>
-            <li>📤 Committed & pushed to GitHub</li>
-        </ul>
-        <p class="dim small">Assigned at 9 PM → done by morning</p>
-    </section>
-    <section>
-        <h2>🍽️ Food Planner App</h2>
-        <div class="highlight-box">
-            <p><strong>Challenge:</strong> Build a web app for meal planning<br>with Dutch translation support</p>
-        </div>
-        <ul class="small">
-            <li>🌐 Full web app with substitution tables</li>
-            <li>🇳🇱 Dutch/English language toggle (156 items translated)</li>
-            <li>🛒 Shopping list generator</li>
-            <li>📱 Accessible via Tailscale network</li>
-        </ul>
-    </section>
-    <section>
-        <h2>📊 Automated Work Tracking</h2>
-        <div class="highlight-box">
-            <p><strong>Challenge:</strong> Track time across 5+ client projects<br>without manual timesheets</p>
-        </div>
-        <ul class="small">
-            <li>💬 "What did you work on?" → logged automatically</li>
-            <li>📁 JSON worklogs + Obsidian notes generated</li>
-            <li>📊 Weekly summaries every Friday</li>
-            <li>🏢 Tracks work across multiple client projects</li>
-        </ul>
-    </section>
-</section>
-
-<!-- COOL CAPABILITIES -->
-<section>
-    <section>
-        <h2>🔥 Cool Things It Can Do</h2>
-    </section>
-    <section>
-        <h2>🤖 Spawn Sub-Agents</h2>
-        <pre><code class="language-text">Me:     "Build me a REST API for the food planner"
-Jarvis: *spawns Claude Code sub-agent*
-        *sub-agent writes code, tests, commits*
-        *reports back when done*</code></pre>
-        <div class="highlight-box small">
-            <p>Can run <strong>Codex, Claude Code, or custom agents</strong> in parallel.<br>
-            Each gets its own sandbox. Main agent orchestrates.</p>
-        </div>
-    </section>
-    <section>
-        <h2>🌐 Browser Automation</h2>
-        <pre><code class="language-text">Me:     "Check the Azure DevOps pipeline status"
-Jarvis: *opens browser*
-        *navigates to Azure DevOps*
-        *takes snapshot, reads DOM*
-        "Pipeline #29 completed ✅ — 5 APIs deployed"</code></pre>
-        <p class="small dim">Full Playwright-powered browser control</p>
-    </section>
-    <section>
-        <h2>📧 Email Agent</h2>
-        <div class="highlight-box">
-            <p><strong>AgentMail</strong> — dedicated AI email address</p>
-            
-        </div>
-        <ul class="small">
-            <li>Receives and processes emails autonomously</li>
-            <li>Can send emails on my behalf (with permission)</li>
-            <li>Filters signal from noise</li>
-        </ul>
-    </section>
-    <section>
-        <h2>🎨 Image Generation</h2>
-        <p>Integrated Gemini 3 Pro for image generation</p>
-        <div class="highlight-box small">
-            <p>"Generate a logo for the food planner app"<br>
-            → Creates image → Sends via Telegram</p>
-        </div>
-    </section>
-    <section>
-        <h2>🔧 Custom Skills</h2>
-        <pre><code class="language-markdown"># skills/smartlink-deploy/SKILL.md
-
-Specialized deployment knowledge:
-- Pipeline configurations
-- RBAC role assignments  
-- Troubleshooting playbooks
-- Architecture reference docs</code></pre>
-        <p class="small">Package domain knowledge as reusable skills.<br>
-        Share them on <span class="blue">clawhub.com</span>.</p>
-    </section>
-</section>
-
-<!-- ARCHITECTURE DIAGRAM -->
-<section>
-    <h2>🏛️ How It All Fits Together</h2>
-    <pre style="font-size: 0.5em; text-align: center;"><code class="language-text">
-    ┌─────────────┐     ┌─────────────┐
-    │  Telegram 📱 │     │ WhatsApp 💬 │
-    └──────┬──────┘     └──────┬──────┘
-           │                    │
-           ▼                    ▼
-    ┌──────────────────────────────────┐
-    │      OpenClaw Gateway 🦀         │
-    │   (Node.js daemon, 24/7)         │
-    ├──────────────────────────────────┤
-    │  Cron │ Heartbeat │ Sub-agents   │
-    ├──────────────────────────────────┤
-    │         LLM Router               │
-    │  ┌───────┬────────┬───────────┐  │
-    │  │Copilot│ Kimi   │ MiniMax   │  │
-    │  │Claude │ GLM-4.7│ Gemini    │  │
-    │  └───────┴────────┴───────────┘  │
-    ├──────────────────────────────────┤
-    │  Tools: filesystem, browser,     │
-    │  APIs, email, git, exec, TTS     │
-    └──────────────────────────────────┘
-           │         │         │
-    ┌──────┴──┐ ┌────┴────┐ ┌──┴──────┐
-    │Obsidian │ │Worklog  │ │ Azure   │
-    │  Notes  │ │Tracking │ │ DevOps  │
-    └─────────┘ └─────────┘ └─────────┘
-    </code></pre>
-</section>
-
-<!-- LESSONS LEARNED -->
-<section>
-    <section>
-        <h2>💡 Lessons Learned</h2>
-    </section>
-    <section>
-        <h2>What Works Well</h2>
-        <ul>
-            <li class="green">File-based memory is surprisingly effective</li>
-            <li class="green">Proactive scheduling (heartbeats + cron) is a game-changer</li>
-            <li class="green">Sub-agent spawning for heavy tasks</li>
-            <li class="green">Free models (Kimi, GLM) handle 90% of tasks</li>
-            <li class="green">Multi-channel: message from anywhere</li>
-        </ul>
-    </section>
-    <section>
-        <h2>What's Tricky</h2>
-        <ul>
-            <li class="orange">Context window limits — compaction loses nuance</li>
-            <li class="orange">No persistent memory without explicit file writes</li>
-            <li class="orange">Image handling quirks (Telegram optimization bugs)</li>
-            <li class="orange">WhatsApp gateway disconnections</li>
-            <li class="orange">Time tracking needs human confirmation (hours)</li>
-        </ul>
-    </section>
-    <section>
-        <h2>Key Insight</h2>
-        <div class="highlight-box">
-            <p style="font-size: 1.3em;">The <strong>SOUL.md</strong> pattern matters more<br>than the model you use.</p>
-            <p class="dim" style="margin-top: 15px;">Personality, boundaries, and behavior rules<br>
-            turn a generic LLM into <em>your</em> assistant.</p>
-        </div>
-    </section>
-</section>
-
-<!-- DEMO IDEAS -->
-<section>
-    <h2>🎬 Live Demo Ideas</h2>
-    <div class="two-col">
-        <div class="architecture-box">
-            <h3>💬 Chat Demo</h3>
-            <ul class="small">
-                <li>Send a Telegram message</li>
-                <li>Watch it respond in real-time</li>
-                <li>Ask it about my schedule</li>
-            </ul>
-        </div>
-        <div class="architecture-box">
-            <h3>🔧 Task Demo</h3>
-            <ul class="small">
-                <li>"Create a reminder for next Tuesday"</li>
-                <li>"What did I work on this week?"</li>
-                <li>"Spawn a coding agent to build X"</li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<!-- GETTING STARTED -->
-<section>
-    <h2>🚀 Want to Try It?</h2>
-    <pre><code class="language-bash">npm install -g openclaw
+        <h2>Try it<br/><span class="accent">yourself</span></h2>
+        <div class="hdivider"></div>
+        <pre>npm install -g openclaw
 openclaw init
-openclaw gateway start</code></pre>
-    <div class="highlight-box small">
-        <p>📖 <strong>Docs:</strong> docs.openclaw.ai</p>
-        <p>💻 <strong>Source:</strong> github.com/openclaw/openclaw</p>
-        <p>🧩 <strong>Skills:</strong> clawhub.com</p>
-        <p>💬 <strong>Community:</strong> discord.com/invite/clawd</p>
-    </div>
-</section>
+openclaw gateway start</pre>
+        <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <span class="tag light">docs.openclaw.ai</span>
+            <span class="tag light">github.com/openclaw/openclaw</span>
+            <span class="tag light">clawhub.com</span>
+        </div>
+        <div class="brutal-box" style="margin-top: 1rem;">
+            <p class="label">Community</p>
+            <p class="value">discord.com/invite/clawd</p>
+        </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
+    </section>
 
-<!-- END -->
-<section>
-    <h1>Questions? 🤔</h1>
-    <p class="dim" style="margin-top: 40px;">or just message my Telegram bot<br>and watch it answer live 😄</p>
-</section>
+    <!-- ── SLIDE 18: CLOSING ── -->
+    <section>
+        <div class="section-break">
+            <div class="slide-label">
+                <span class="category">Thanks</span>
+                <span class="line"></span>
+                <span class="num">17</span>
+            </div>
+            <div class="big-word">Questions<br/><span>?</span></div>
+            <p style="margin-top: 2rem; font-size: 0.5em; color: rgba(246,246,246,0.4);">Rob Hofman · Computer Club 2026</p>
+        </div>
+        <div class="slide-footer"><span>OpenClaw</span><span>Computer Club 2026</span></div>
+    </section>
 
 </div>
 </div>
@@ -454,8 +746,12 @@ openclaw gateway start</code></pre>
     Reveal.initialize({
         hash: true,
         slideNumber: true,
-        transition: 'slide',
-        plugins: [ RevealHighlight ]
+        transition: 'fade',
+        transitionSpeed: 'fast',
+        progress: true,
+        controls: false,
+        center: false,
+        plugins: [RevealHighlight]
     });
 </script>
 </body>
